@@ -17,6 +17,10 @@ RemoveIngredientIntent minus the {ingredients}
 RemoveIngredientIntent without the {ingredients}
 NextInstructionIntent say next
 NextInstructionIntent Next Step
+NextInstructionIntent afterwards
+NextInstructionIntent after that
+NextInstructionIntent ok next
+NextInstructionIntent ok after that
 InstructionSetIntent give me Instructions
 InstructionSetIntent yes
 NextRecipe say give me another recipe

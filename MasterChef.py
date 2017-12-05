@@ -16,26 +16,30 @@ id = '-1'
 instructionSteps = []
 lastInstruction = 0
 g_ingredients = []
-ask = Ask(app, '/alexa_end_point')
+ask = Ask(app, '/')
 
 if os.getenv('GREETINGS_DEBUG_EN', False):
     logging.getLogger('flask_ask').setLevel(logging.DEBUG)
 
 @ask.launch
 def launch():
-    speech_text = "Welcome to our smart recepie finder app. Tasty Dish Guaranteed. " \
+    speech_text = "Welcome to our smart recipe finder app. Tasty Dish Guaranteed. " \
                   "Ask the Master Chef what can I cook today?. Just tell Master Chef what Ingredients do you have";
-    reprompt_text = "Give me recipe for Tomata onion and chilly etc. ";
+    reprompt_text = "You can say Give me recipe for Tomato onion and chilly etc. ";
     return question(speech_text).reprompt(reprompt_text)
 
 @ask.intent('NewIngredientIntent')
 def handle_new_ingredient_intent(ingredients):
     global index
     index = 0
+    global lastInstruction
+    lastInstruction = 0
+    global instructionSteps
+    instructionSteps = []
     global response
     response = getRecipe(ingredients)
     if len(response) <= 0 :
-        speech_text = 'Sorry! No Reipe found with ingredients ' + str(ingredients) + ' Try ' \
+        speech_text = 'Sorry! No recipe found with ingredients ' + str(ingredients) + ' Try ' \
                         'Adding or removing an ingredient'
         reprompt_text = 'You can add ingredient by saying add Chicken or To Remove say remove Tomato '
         return question(speech_text).reprompt(reprompt_text)
@@ -64,7 +68,7 @@ def handle_next_recipe():
             speech_text += '. Would you like Master Chef to walk you through this recipe step by step?'
             reprompt_text = ' You can say start cooking or yes for detailed instructions or No for new dish'
         else:
-            speech_text = 'No more Recipe. Try asking by changing your ingredients to master chef '
+            speech_text = 'No more Recipe. Try adding or removing ingredients to master chef '
     else:
         speech_text = 'Wrong Invocation'
         return statement(speech_text)
@@ -77,16 +81,16 @@ def handle_instruction_set_intent():
         instructionSteps = getInstructions(id)
 
         if len(instructionSteps[0]['steps']) > 0:
-            speech_text = 'Step '
+            speech_text = 'Here are the Instructions. Step. '
             speech_text += str(instructionSteps[0]['steps'][lastInstruction]['number']) + ' ' + \
                            str(instructionSteps[0]['steps'][lastInstruction]['step']) +\
-                           " . When ready say next or Next Step"
+                           ". When ready say Next Step"
         else:
             speech_text = 'There are no Instructions for this Dish. Enjoy your meal'
             return statement(speech_text)
     else:
-        speech_text = 'Wrong Invocation'
-        return statement(speech_text)
+        speech_text = 'For instruction on how to make a dish you must select a recipe first'
+        return question(speech_text)
 
     return question(speech_text)
 
@@ -96,14 +100,14 @@ def handle_next_instruction_intent():
     global lastInstruction
     lastInstruction += 1
     print (str(len(instructionSteps[0]['steps'])) + ' '+ str(lastInstruction))
-    speech_text = 'Step';
+    speech_text = '';
     if lastInstruction == (len(instructionSteps[0]['steps']) - 1):
-        speech_text += str(instructionSteps[0]['steps'][lastInstruction]['number']) + ' ' + \
-                      str (instructionSteps[0]['steps'][lastInstruction]['step']) + ".Enjoy your meal."
+        speech_text += ' you are almost done. Final Step ' + ' ' + \
+                      str (instructionSteps[0]['steps'][lastInstruction]['step']) + ". Enjoy your meal. Good Bye"
         return statement(speech_text)
     elif lastInstruction < (len(instructionSteps[0]['steps']) - 1):
-        speech_text += str(instructionSteps[0]['steps'][lastInstruction]['number']) + \
-                      str(instructionSteps[0]['steps'][lastInstruction]['step']) + ".When ready say next or Next Step"
+        speech_text += 'step ' + str(instructionSteps[0]['steps'][lastInstruction]['number']) + \
+                      str(instructionSteps[0]['steps'][lastInstruction]['step']) + ". When ready say Next Step"
     else:
         speech_text = "Your dish is completed. Enjoy the Dish";
         return statement(speech_text)
@@ -137,6 +141,11 @@ def handle_add_ingredient(ingredients):
     g_ingredients = temp
     print (g_ingredients)
     return handle_new_ingredient_intent(g_ingredients)
+
+@ask.intent('AMAZON.StopIntent')
+def handle_stop_intent():
+    speech_text = 'Good Bye! Have a Nice Day'
+    return statement(speech_text)
 
 def getInstructions(id):
     url = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' \
