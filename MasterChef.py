@@ -150,7 +150,7 @@ def handle_stop_intent():
 def getInstructions(id):
     url = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' \
           + str(id) + '/analyzedInstructions?stepBreakdown=true'
-    headers = {'X-Mashape-Key':'nkStbyFFmcmsh9Wff3VpFguZu518p1ilm5kjsn6YKmPBWa1wUn','Accept':'application/json'}
+    headers = {'X-Mashape-Key':'your Key','Accept':'application/json'}
     print (url)
     r = requests.get(url,headers=headers)
     instruction = r.json()
@@ -166,7 +166,7 @@ def getRecipe(ingredients):
     print (all_ingredients)
     url = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' \
           'findByIngredients?fillIngredients=false&ingredients='+ all_ingredients + '&limitLicense=false&number=5&ranking=1'
-    headers = {'X-Mashape-Key':'nkStbyFFmcmsh9Wff3VpFguZu518p1ilm5kjsn6YKmPBWa1wUn' ,'Accept':'application/json'}
+    headers = {'X-Mashape-Key':'your Key' ,'Accept':'application/json'}
     print (url)
     r = requests.get(url,headers=headers)
     # r.content = r._content.replace('\\', '')
