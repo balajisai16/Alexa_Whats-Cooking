@@ -54,3 +54,14 @@ the internet [5].
 ## Zappa
 Zappa is a serverless framework which we have used to deploy our Alexa 
 Skill to AWS Lambda using python [8].
+
+# References
+
+1. https://developer.amazon.com/alexa-skills-kit
+2. https://turbofuture.com/consumer-electronics/Why-Amazons-Echo-DotIs-Better-Than-Amazon-Echo
+3. https://market.mashape.com/spoonacular/recipe-food-nutrition
+4. https://github.com/johnwheeler/flask-ask
+5. https://ngrok.com/docs
+6. http://docs.aws.amazon.com/lambda/latest/dg/welcome.html
+7. https://developer.amazon.com/docs/custom-skills/define-the-interactionmodel-in-json-and-text.html
+8. https://github.com/Miserlou/Zappa
