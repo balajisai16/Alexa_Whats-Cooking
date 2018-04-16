@@ -6,7 +6,7 @@ What's Cooking finds recipes that use as many of the given ingredients as possib
 Here are some things you can ask Alexa for:
 
 * Open Today’s Menu
-* Ask What’s Cooking give me recipes for Onions, Sweet Potatoes, Bell Pepper, etc”
+* Ask What’s Cooking give me recipes for Onions, Sweet Potatoes, Bell Pepper, etc
 * Add ingredient Tomatoes, Thai Chilly, etc
 * Remove ingredient Tomatoes, Thai Chilly, etc
 * Give me instructions for
