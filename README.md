@@ -55,6 +55,9 @@ the internet [5].
 Zappa is a serverless framework which we have used to deploy our Alexa 
 Skill to AWS Lambda using python [8].
 
+# SetUp
+Please look at Setup Guidlines file above for total setup process.
+
 # References
 
 1. https://developer.amazon.com/alexa-skills-kit
